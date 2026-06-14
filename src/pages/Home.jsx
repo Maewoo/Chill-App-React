@@ -1,6 +1,6 @@
 import HeroBanner from '../components/HeroBanner.jsx';
 import Navbar from '../components/Navbar.jsx';
-import featuredBg from '../assets/Cover/dutyafterschool.png';
+import featuredBg from '../assets/cover/dutyafterschool.png';
 import Footer from '../components/Footer.jsx';
 
 import MovieCard from '../components/MovieCard.jsx';
