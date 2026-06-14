@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  /* Konversi dari CSS vanilla kamu */
+  --color-bg-home: #181a1c;         /* --other-page-header */
+  --color-paper: #22282a;           /* --other-paper */
+  --color-chill-blue: #0f1e93;      /* --btn-primary-300 */
+  --color-red-pressed: #b71f1d;     /* --red-pressed */
+  --color-text-primary: #ffffff;    /* --text-light-primary */
+  --color-text-secondary: #c1c2c4;  /* --text-light-secondary */
+  --color-newepisode: #0f1e93;   /* --bg-new-episode */
+  /* Dropdown mobile */
+  --color-dropdown-bg: #1f1f23;
+}
+
+body {
+  background-color: var(--color-bg-home);
+  font-family: "Lato", sans-serif;
+}
+
+/* Utilitas utility tersembunyi untuk scrollbar horizontal list film */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
