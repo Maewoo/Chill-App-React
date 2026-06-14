@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import logoFooter from '../assets/logo-footer.png';
+
 function Footer(){
     const [activeMenu, setActiveMenu] = useState(null);
 
@@ -33,7 +35,7 @@ function Footer(){
           <div className="flex items-center gap-2">
             {/* Ganti dengan tag <img src="/asset/Logo.png" /> jika ada aset gambar logo */}
             <div className="flex items-center gap-2 text-white font-black text-2xl tracking-wider uppercase select-none">
-              <img src="src\assets\logo-footer.png" alt="Logo Chill" className="h-[44px] object-contain" /> 
+              <img src={logoFooter} alt="Logo Chill" className="h-[44px] object-contain" /> 
             </div>
           </div>
           <p className="text-xs text-gray-500 font-medium">
@@ -74,7 +76,7 @@ function Footer(){
         {/* Bagian Atas: Brand & Hak Cipta */}
         <div className="flex flex-col gap-2">
           <div className="text-white font-black text-xl tracking-wider uppercase">
-            <img src="src\assets\logo-footer.png" alt="Logo Chill" className="h-[24px] object-contain" />
+            <img src={logoFooter} alt="Logo Chill" className="h-[24px] object-contain" />
           </div>
           <p className="text-xs text-gray-500">
             &copy;2023 Chill All Rights Reserved.

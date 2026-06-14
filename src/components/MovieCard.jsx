@@ -28,12 +28,10 @@ function MovieCard(props){
       </div>
       <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex items-end justify-between p-2 md:p-3 z-10">
   
-        {/* 1. SISI KIRI: Judul Film langsung berada di bawah parent utama */}
         <h5 className="text-[11px] md:text-sm text-white font-bold truncate max-w-[60%] mb-[2px]">
             {props.title}
         </h5>
         
-        {/* 2. SISI KANAN: Rating Bintang langsung didorong ke pojok kanan oleh parent */}
         {props.rating && (
             <div className="flex items-center gap-1 text-[10px] md:text-xs text-text-secondary font-medium whitespace-nowrap">
             <img 
