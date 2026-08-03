@@ -2,9 +2,9 @@ import AuthLayout from '../components/AuthLayout.jsx';
 import Input from '../components/Input.jsx';
 import bgLogin from '../assets/bg-login.jpg';
 import Buttondaftar from '../components/Buttonlogin.jsx';
-import ButtonSSO from '../components/ButotnSSO.jsx';
+import ButtonSSO from '../components/ButtonSSO.jsx';
 
-function Login(){
+function Register(){
     return(
         <>
         <AuthLayout judul="Daftar" subJudul="Selamat datang!" bgImage={bgLogin}>
@@ -23,4 +23,4 @@ function Login(){
         </>
     )
 }
-export default Login
+export default Register

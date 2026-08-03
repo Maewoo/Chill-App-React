@@ -2,7 +2,7 @@ import AuthLayout from '../components/AuthLayout.jsx';
 import Input from '../components/Input.jsx';
 import bgLogin from '../assets/bg-login.jpg';
 import Button from '../components/Buttonlogin.jsx';
-import ButtonSSO from '../components/ButotnSSO.jsx';
+import ButtonSSO from '../components/ButtonSSO.jsx';
 
 function Login(){
     return(

@@ -5,8 +5,8 @@
 // import Button from "./components/Button.jsx";
 // import Input from "./components/Input.jsx";
 import "./App.css";
-// import Login from './pages/Login.jsx'
-// import Register from './pages/Register.jsx'
+import Login from './pages/Login.jsx'
+import Register from './pages/Register.jsx'
 import Home from './pages/Home.jsx'
 
 function App() {
@@ -14,7 +14,6 @@ function App() {
     <>
       {/* <Login/> */}
       {/* <Register/> */}
-      
       <Home/>
     </>
   );
