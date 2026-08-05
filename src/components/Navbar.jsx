@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import logoMobile from '../assets/logo-mobile.svg';
 import logoDesktop from '../assets/logo-chill.png';
@@ -47,9 +48,11 @@ function Navbar() {
               ⭐ Ubah Premium
             </button>
             <div className="border-t border-gray-800 my-1"></div>
-            <button className="w-full flex items-center gap-2 px-3 py-1.5 text-[10px] text-gray-400 hover:bg-white/5 hover:text-red-400 transition text-left cursor-pointer">
-              🚪 Keluar
-            </button>
+            <Link to= "/login">
+              <button className="w-full flex items-center gap-2 px-3 py-1.5 text-[10px] text-text-secondary hover:bg-white/5 hover:text-white transition text-left cursor-pointer">
+                🚪 Keluar
+              </button>
+            </Link>
           </div>
         )}
       </div>

@@ -7,10 +7,14 @@ import MovieCard from '../components/MovieCard.jsx';
 import MovieRow from '../components/MovieRow.jsx';
 import MovieCardPortrait from '../components/MovieCardPortrait.jsx';
 
-// DATA
-import { moviesData } from '../data/movies';
-import { topTrending } from '../data/movies';
-import { moviesTrending } from '../data/movies';
+// OLD DATA
+// import { moviesData } from '../data/movies';
+// import { topTrending } from '../data/movies';
+// import { moviesTrending } from '../data/movies';
+
+// NEW DATA
+import { movies } from '../data/moviesData.js';
+import { imageField } from '../data/moviesData.js';
 
 function Home() {
   return (
@@ -28,7 +32,8 @@ function Home() {
 
       <div className="relative z-20">
         
-        {/* Kategori 1: Melanjutkan Tonton Film */}
+        <MovieRow title="Top Rating Film dan Series Hari ini" movies={topRating} imageField="poster" />
+        {/* Kategori 1: Melanjutkan Tonton Film
         <MovieRow categoryTitle="Melanjutkan Tonton Film">
         {moviesData.map((item) => (
           <MovieCard 
@@ -65,8 +70,10 @@ function Home() {
               isTop10={item.isTop10}
             />
           ))}
-        </MovieRow>
+        </MovieRow> */}
+
         <Footer />
+    </div>
     </div>
     
   );
