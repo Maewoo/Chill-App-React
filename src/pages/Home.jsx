@@ -3,9 +3,9 @@ import Navbar from '../components/Navbar.jsx';
 import featuredBg from '../assets/cover/dutyafterschool.png';
 import Footer from '../components/Footer.jsx';
 
-import MovieCard from '../components/MovieCard.jsx';
+//import MovieCard from '../components/MovieCard.jsx';
 import MovieRow from '../components/MovieRow.jsx';
-import MovieCardPortrait from '../components/MovieCardPortrait.jsx';
+// import MovieCardPortrait from '../components/MovieCardPortrait.jsx';
 
 // OLD DATA
 // import { moviesData } from '../data/movies';
@@ -13,8 +13,8 @@ import MovieCardPortrait from '../components/MovieCardPortrait.jsx';
 // import { moviesTrending } from '../data/movies';
 
 // NEW DATA
-import { movies } from '../data/moviesData.js';
-import { imageField } from '../data/moviesData.js';
+import { MoviesData } from '../data/moviesData.js';
+import { getTopRatingMovies, getTrendingMovies, getLatestMovies, getContinueWatchingMovies } from '../data/moviesFilters.js';
 
 function Home() {
   return (
@@ -31,46 +31,11 @@ function Home() {
       />
 
       <div className="relative z-20">
-        
-        <MovieRow title="Top Rating Film dan Series Hari ini" movies={topRating} imageField="poster" />
-        {/* Kategori 1: Melanjutkan Tonton Film
-        <MovieRow categoryTitle="Melanjutkan Tonton Film">
-        {moviesData.map((item) => (
-          <MovieCard 
-            key={item.id}
-            image={item.image} 
-            title={item.title}
-            rating={item.rating}
-            isNew={item.isNew}
-            isTop10={item.isTop10}
-          />
-        ))}
-        </MovieRow>
-      </div>
-      <MovieRow categoryTitle="Top Rating Film dan Series Hari Ini">
-            {topTrending.map((item) => (
-                <MovieCardPortrait 
-                  key={item.id}
-                  image={item.image} 
-                  title={item.title}
-                  rating={item.rating}
-                  isNew={item.isNew}
-                  isTop10={item.isTop10}
-                />
-            ))}
-        </MovieRow>
-        <MovieRow categoryTitle="Film Trending">
-          {moviesTrending.map((item) => (
-            <MovieCardPortrait 
-              key={item.id}
-              image={item.image} 
-              title={item.title}
-              rating={item.rating}
-              isNew={item.isNew}
-              isTop10={item.isTop10}
-            />
-          ))}
-        </MovieRow> */}
+
+        <MovieRow title="Continue Watching" movies={getContinueWatchingMovies(MoviesData)} imageField="still" />
+        <MovieRow title="Top Rating Film dan Series Hari ini" movies={getTopRatingMovies(MoviesData)} imageField="poster" />
+        <MovieRow title="Latest Released" movies={getLatestMovies(MoviesData)} imageField="poster" />
+        <MovieRow title="Trending Now" movies={getTrendingMovies(MoviesData)} imageField="poster" />
 
         <Footer />
     </div>

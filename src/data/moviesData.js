@@ -34,10 +34,10 @@ export const MoviesData = [
     id: 2,
     title: "The Batman",
     releaseDate: "2022-02-01",
-    poster: "/",
+    poster: "/public/images/portrait/the-batman.jpg",
     backdrop: "/",
-    still: "/",
-    isTrending: true,
+    still: "/public/images/batman.png",
+    isTrending: true, // top 10 trending
     watchTime: 0.2,
     rating: 4.5,
     genre: ["Fighting", "Action"],
@@ -95,7 +95,7 @@ export const MoviesData = [
     id: 6,
     title: "Spider-Man: Brand New Day",
     releaseDate: "2026-07-23",
-    poster: "/",
+    poster: "/public/images/portrait/spidermanbnd-portrait.jpg",
     backdrop: "/",
     still: "/",
     isTrending: true,
@@ -105,6 +105,19 @@ export const MoviesData = [
     duration: "null",
     description: "null",
     ageRating: "null",
-}
+},
+{id: 7,
+    title: "A Man Called Otto",
+    releaseDate: "",
+    poster: "/public/images/portrait/a-man-called-otto.png",
+    backdrop: "/",
+    still: "/public/images/a-man-called-otto.png",
+    isTrending: true,
+    watchTime: 0,
+    rating: 4.8,
+    genre: ["Drama"],
+    duration: "",
+    description: "",
+    ageRating: "",}
 
 ]
