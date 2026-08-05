@@ -2,8 +2,13 @@ import starIcon from '../assets/star.png';
 
 function MovieCard({movie, imageField = "poster"}){
   const isPortrait = imageField === "poster";
-  //const imageSrc = movie[imageField]
-  const imageSrc = `/images/${isPortrait ? "posters" : "stills"}/${movie[imageField]}`;
+  const folderMap = {
+    poster: "posters",
+    backdrop: "backdrops",
+    still: "stills"
+  };
+  const folder = folderMap[imageField] || "posters";
+  const imageSrc = `/images/${folder}/${movie[imageField]}`;
 
     return(
         <>
