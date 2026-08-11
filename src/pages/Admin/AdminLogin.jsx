@@ -64,7 +64,7 @@ function AdminLogin() {
         </form>
 
         <p className="text-xs text-gray-400 text-center mt-6">
-          Demo credentials: admin / admin123
+          For Demo: admin / admin123
         </p>
       </div>
     </div>
