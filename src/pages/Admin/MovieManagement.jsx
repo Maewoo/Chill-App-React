@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getMovies } from '../../services/api/movieApi.js';
 import { isAdminLoggedIn } from '../../utils/adminAuth.js';
 
 const INITIAL_FORM = {
@@ -35,15 +36,19 @@ function MovieManagement() {
   }
 
   useEffect(() => {
-    loadMovies();
-  }, []);
+    getMovies()
+    .then((response)=>{setMovies(response.data);
+    })
+    .catch((error)=>{console.error(error);
+    });
+},[]);
 
-  const loadMovies = () => {
-    const stored = localStorage.getItem('movies');
-    if (stored) {
-      setMovies(JSON.parse(stored));
-    }
-  };
+  // const loadMovies = () => {
+  //   const stored = localStorage.getItem('movies');
+  //   if (stored) {
+  //     setMovies(JSON.parse(stored));
+  //   }
+  // };
 
   const saveMovies = (updatedMovies) => {
     localStorage.setItem('movies', JSON.stringify(updatedMovies));
