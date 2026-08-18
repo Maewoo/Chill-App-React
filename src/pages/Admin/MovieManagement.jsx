@@ -1,27 +1,44 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getMovies } from '../../services/api/movieApi.js';
-import { isAdminLoggedIn } from '../../utils/adminAuth.js';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  getMovies,
+  addMovie,
+  updateMovie,
+  deleteMovie,
+} from "../../services/api/movieApi.js";
+import { isAdminLoggedIn } from "../../utils/adminAuth.js";
 
 const INITIAL_FORM = {
   id: null,
-  title: '',
-  releaseDate: '',
-  poster: '',
-  backdrop: '',
-  still: '',
+  title: "",
+  releaseDate: "",
+  poster: "",
+  backdrop: "",
+  still: "",
   rating: 5,
-  duration: '',
+  duration: "",
   genre: [],
-  ageRating: '18+',
-  description: '',
+  ageRating: "18+",
+  description: "",
   isTrending: false,
   isTop10: false,
-  watchTime: 0
+  watchTime: 0,
 };
 
-const GENRE_OPTIONS = ['Action', 'Drama', 'Horror', 'Comedy', 'Thriller', 'Superhero', 'Suspense', 'Romance', 'Animation', 'Psychological', 'Fighting'];
-const AGE_RATING_OPTIONS = ['13+', '17+', '18+', '21+', 'All Ages'];
+const GENRE_OPTIONS = [
+  "Action",
+  "Drama",
+  "Horror",
+  "Comedy",
+  "Thriller",
+  "Superhero",
+  "Suspense",
+  "Romance",
+  "Animation",
+  "Psychological",
+  "Fighting",
+];
+const AGE_RATING_OPTIONS = ["13+", "17+", "18+", "21+", "All Ages"];
 
 function MovieManagement() {
   const navigate = useNavigate();
@@ -30,33 +47,53 @@ function MovieManagement() {
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
 
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await getMovies();
+        setMovies(response.data);
+      } catch (error) {
+        console.error("Failed to load movies:", error);
+      }
+    };
+    // getMovies()
+    //   .then((response) => {
+    //     setMovies(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+    fetchMovies();
+  }, []);
+
   if (!isAdminLoggedIn()) {
-    navigate('/admin/login');
+    navigate("/admin/login");
     return null;
   }
 
-  useEffect(() => {
-    getMovies()
-    .then((response)=>{setMovies(response.data);
-    })
-    .catch((error)=>{console.error(error);
-    });
-},[]);
+  const loadMovies = async () => {
+    try {
+      const response = await getMovies();
+      setMovies(response.data);
+    } catch (error) {
+      console.error("Failed to load movies:", error);
+    }
+  };
 
-  // const loadMovies = () => {
   //   const stored = localStorage.getItem('movies');
   //   if (stored) {
   //     setMovies(JSON.parse(stored));
   //   }
   // };
 
-  const saveMovies = (updatedMovies) => {
-    localStorage.setItem('movies', JSON.stringify(updatedMovies));
-    setMovies(updatedMovies);
-  };
+  // const saveMovies = (updatedMovies) => {
+  //   localStorage.setItem("movies", JSON.stringify(updatedMovies));
+  //   setMovies(updatedMovies);
+  // };
 
   const handleAddMovie = () => {
-    setFormData({ ...INITIAL_FORM, id: Date.now() });
+    // setFormData({ ...INITIAL_FORM, id: Date.now() });
+    setFormData({ ...INITIAL_FORM });
     setShowForm(true);
   };
 
@@ -69,56 +106,82 @@ function MovieManagement() {
     setDeleteConfirm(movieId);
   };
 
-  const handleConfirmDelete = () => {
-    const updated = movies.filter(m => m.id !== deleteConfirm);
-    saveMovies(updated);
-    setDeleteConfirm(null);
+  const handleConfirmDelete = async () => {
+    // const updated = movies.filter((m) => m.id !== deleteConfirm);
+    // saveMovies(updated);
+    // setDeleteConfirm(null);
+    try {
+      await deleteMovie(deleteConfirm);
+      await loadMovies();
+      setDeleteConfirm(null);
+    } catch (error) {
+      console.error("Failed to delete movie:", error);
+    }
   };
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : type === 'number' ? parseFloat(value) : value
+      [name]:
+        type === "checkbox"
+          ? checked
+          : type === "number"
+            ? parseFloat(value)
+            : value,
     }));
   };
 
   const handleGenreToggle = (genre) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       genre: prev.genre.includes(genre)
-        ? prev.genre.filter(g => g !== genre)
-        : [...prev.genre, genre]
+        ? prev.genre.filter((g) => g !== genre)
+        : [...prev.genre, genre],
     }));
   };
 
   const validateForm = () => {
-    if (!formData.title.trim() || formData.title.length < 3) return 'Title must be at least 3 characters';
-    if (!formData.releaseDate) return 'Release date is required';
-    if (!formData.poster.trim()) return 'Poster filename is required';
-    if (!formData.backdrop.trim()) return 'Backdrop filename is required';
-    if (!formData.still.trim()) return 'Still filename is required';
-    if (formData.rating < 1 || formData.rating > 5) return 'Rating must be between 1-5';
-    if (!formData.duration.trim()) return 'Duration is required';
-    if (formData.genre.length === 0) return 'Select at least one genre';
+    if (!formData.title.trim() || formData.title.length < 3)
+      return "Title must be at least 3 characters";
+    if (!formData.releaseDate) return "Release date is required";
+    if (!formData.poster.trim()) return "Poster filename is required";
+    if (!formData.backdrop.trim()) return "Backdrop filename is required";
+    if (!formData.still.trim()) return "Still filename is required";
+    if (formData.rating < 1 || formData.rating > 5)
+      return "Rating must be between 1-5";
+    if (!formData.duration.trim()) return "Duration is required";
+    if (formData.genre.length === 0) return "Select at least one genre";
     return null;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const error = validateForm();
     if (error) {
       alert(error);
       return;
     }
+    try {
+      if (formData.id) {
+        await updateMovie(formData.id, formData);
+      } else {
+        await addMovie(formData);
+      }
+      await loadMovies();
+      // const response = await getMovies();
+      // setMovies(response.data);
+      // const updated =
+      //   formData.id && movies.some((m) => m.id === formData.id)
+      //     ? movies.map((m) => (m.id === formData.id ? formData : m))
+      //     : [...movies, formData];
 
-    const updated = formData.id && movies.some(m => m.id === formData.id)
-      ? movies.map(m => m.id === formData.id ? formData : m)
-      : [...movies, formData];
-
-    saveMovies(updated);
-    setShowForm(false);
-    setFormData(INITIAL_FORM);
+      //saveMovies(updated);
+      setShowForm(false);
+      setFormData(INITIAL_FORM);
+    } catch (error) {
+      console.error("Failed to save movie:", error);
+    }
   };
 
   return (
@@ -126,7 +189,7 @@ function MovieManagement() {
       <nav className="bg-paper border-b border-gray-700 px-6 py-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold">Movies Management</h1>
         <button
-          onClick={() => navigate('/admin/dashboard')}
+          onClick={() => navigate("/admin/dashboard")}
           className="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded transition duration-200"
         >
           Back
@@ -145,13 +208,20 @@ function MovieManagement() {
           {/* Movies List */}
           <div className="grid grid-cols-1 gap-4">
             {movies.length === 0 ? (
-              <p className="text-gray-400 text-center py-8">No movies yet. Add one to get started.</p>
+              <p className="text-gray-400 text-center py-8">
+                No movies yet. Add one to get started.
+              </p>
             ) : (
-              movies.map(movie => (
-                <div key={movie.id} className="bg-paper rounded-lg p-4 border border-gray-700 flex justify-between items-center">
+              movies.map((movie) => (
+                <div
+                  key={movie.id}
+                  className="bg-paper rounded-lg p-4 border border-gray-700 flex justify-between items-center"
+                >
                   <div>
                     <h3 className="font-semibold text-lg">{movie.title}</h3>
-                    <p className="text-sm text-gray-400">Rating: {movie.rating} ⭐ | {movie.genre.join(', ')}</p>
+                    <p className="text-sm text-gray-400">
+                      Rating: {movie.rating} ⭐ | {movie.genre.join(", ")}
+                    </p>
                   </div>
                   <div className="flex gap-2">
                     <button
@@ -179,7 +249,12 @@ function MovieManagement() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
           <div className="bg-paper rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="bg-paper border-b border-gray-700 px-6 py-4 flex justify-between items-center sticky top-0">
-              <h2 className="text-xl font-bold">{formData.id && movies.some(m => m.id === formData.id) ? 'Edit' : 'Add'} Movie</h2>
+              <h2 className="text-xl font-bold">
+                {formData.id && movies.some((m) => m.id === formData.id)
+                  ? "Edit"
+                  : "Add"}{" "}
+                Movie
+              </h2>
               <button
                 onClick={() => setShowForm(false)}
                 className="text-2xl hover:text-gray-400"
@@ -268,8 +343,10 @@ function MovieManagement() {
                   onChange={handleInputChange}
                   className="px-3 py-2 bg-gray-700 rounded border border-gray-600 focus:border-blue-500 focus:outline-none"
                 >
-                  {AGE_RATING_OPTIONS.map(opt => (
-                    <option key={opt} value={opt}>{opt}</option>
+                  {AGE_RATING_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
                   ))}
                 </select>
 
@@ -297,8 +374,11 @@ function MovieManagement() {
               <div>
                 <p className="font-semibold mb-2">Genres</p>
                 <div className="grid grid-cols-3 gap-2">
-                  {GENRE_OPTIONS.map(genre => (
-                    <label key={genre} className="flex items-center gap-2 cursor-pointer">
+                  {GENRE_OPTIONS.map((genre) => (
+                    <label
+                      key={genre}
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
                       <input
                         type="checkbox"
                         checked={formData.genre.includes(genre)}
@@ -347,7 +427,10 @@ function MovieManagement() {
                   type="submit"
                   className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded transition duration-200 font-semibold"
                 >
-                  {formData.id && movies.some(m => m.id === formData.id) ? 'Update' : 'Add'} Movie
+                  {formData.id && movies.some((m) => m.id === formData.id)
+                    ? "Update"
+                    : "Add"}{" "}
+                  Movie
                 </button>
               </div>
             </form>
