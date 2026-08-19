@@ -12,7 +12,7 @@ export function getTrendingMovies(movies) {
   return movies
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 10)
-    .map((movie) => ({ ...movie, isTrending: true }));
+    .map((movie) => ({ ...movie /*isTrending: true*/ }));
 }
 // console.log(getTrendingMovies(MoviesData));
 
@@ -22,7 +22,7 @@ export function getLatestMovies(movies) {
       const releaseDate = new Date(movie.releaseDate);
       const currentDate = new Date();
       const oneMonthAgo = new Date();
-      oneMonthAgo.setMonth(currentDate.getMonth() - 6); //mengambil data film yang dirilis dalam 6 bulan terakhir
+      oneMonthAgo.setMonth(currentDate.getMonth() - 12); //mengambil data film yang dirilis dalam 24 bulan terakhir
       return releaseDate >= oneMonthAgo && releaseDate <= currentDate;
     })
     .sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));

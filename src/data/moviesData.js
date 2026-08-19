@@ -98,17 +98,17 @@ const DEFAULT_MOVIES = [
 ];
 
 export function getMoviesData() {
-  const stored = localStorage.getItem('movies');
+  const stored = localStorage.getItem("movies");
   if (stored) {
     try {
       return JSON.parse(stored);
     } catch (e) {
-      console.error('Failed to parse movies from localStorage:', e);
+      console.error("Failed to parse movies from localStorage:", e);
       return DEFAULT_MOVIES;
     }
   }
   // Initialize localStorage with defaults on first load
-  localStorage.setItem('movies', JSON.stringify(DEFAULT_MOVIES));
+  localStorage.setItem("movies", JSON.stringify(DEFAULT_MOVIES));
   return DEFAULT_MOVIES;
 }
 
