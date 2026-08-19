@@ -8,7 +8,7 @@ for admin CRUD implementation demo please navigate to `/admin/login`
 
 ---
 
-deployment: [Chill App]https://chill-app-react-jb7b9acwq-maewoos-projects.vercel.app/login
+deployment: [Chill App](https://chill-app-react-jb7b9acwq-maewoos-projects.vercel.app/login)
 
 ---
 
