@@ -8,6 +8,10 @@ for admin CRUD implementation demo please navigate to `/admin/login`
 
 ---
 
+deployment: [Chill App]https://chill-app-react-jb7b9acwq-maewoos-projects.vercel.app/login
+
+---
+
 ## React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
