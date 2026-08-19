@@ -1,11 +1,14 @@
 # Note for CRUD implementation demo
-for admin CRUD implementation demo please navigate to ``` /admin/login ```
 
-
-
+for admin CRUD implementation demo please navigate to `/admin/login`
 
 ---
-## React + Vite 
+
+.env = VITE_API_URL=https://6a81cd87400f94b23c6fa58c.mockapi.io/api/v1
+
+---
+
+## React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
