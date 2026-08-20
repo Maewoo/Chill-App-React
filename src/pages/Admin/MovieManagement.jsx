@@ -7,6 +7,9 @@ import {
   deleteMovie,
 } from "../../services/api/movieApi.js";
 import { isAdminLoggedIn } from "../../utils/adminAuth.js";
+import { useDispatch } from "react-redux";
+import { setMovies } from "../../store/redux/movieReducer.js";
+import { useSelector } from "react-redux";
 
 const INITIAL_FORM = {
   id: null,
@@ -15,10 +18,10 @@ const INITIAL_FORM = {
   poster: "",
   backdrop: "",
   still: "",
-  rating: 5,
+  rating: "",
   duration: "",
   genre: [],
-  ageRating: "18+",
+  ageRating: "",
   description: "",
   isTrending: false,
   isTop10: false,
@@ -41,44 +44,49 @@ const GENRE_OPTIONS = [
 const AGE_RATING_OPTIONS = ["13+", "17+", "18+", "21+", "All Ages"];
 
 function MovieManagement() {
+  console.log("MovieManagement rendered");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [movies, setMovies] = useState([]);
+  //const [movies, setMovies] = useState([]);
+  const movies = useSelector((state) => state.movies.data);
+  console.log("Movies from Redux:", movies);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
 
+  const loadMovies = async () => {
+    try {
+      const response = await getMovies();
+      //setMovies(response.data);
+      dispatch(setMovies(response.data));
+    } catch (error) {
+      console.error("Failed to load movies:", error);
+    }
+  };
   useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await getMovies();
-        setMovies(response.data);
-      } catch (error) {
-        console.error("Failed to load movies:", error);
-      }
-    };
-    // getMovies()
-    //   .then((response) => {
+    // const fetchMovies = async () => {
+    //   try {
+    //     const response = await getMovies();
     //     setMovies(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-    fetchMovies();
+    //   } catch (error) {
+    //     console.error("Failed to load movies:", error);
+    //   }
+    // };
+    // // getMovies()
+    // //   .then((response) => {
+    // //     setMovies(response.data);
+    // //   })
+    // //   .catch((error) => {
+    // //     console.error(error);
+    // //   });
+    // fetchMovies();
+    loadMovies();
   }, []);
 
   if (!isAdminLoggedIn()) {
     navigate("/admin/login");
     return null;
   }
-
-  const loadMovies = async () => {
-    try {
-      const response = await getMovies();
-      setMovies(response.data);
-    } catch (error) {
-      console.error("Failed to load movies:", error);
-    }
-  };
 
   //   const stored = localStorage.getItem('movies');
   //   if (stored) {
